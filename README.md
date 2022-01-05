@@ -33,7 +33,7 @@ npm start
 
 - 👩🏻 Mathilde Asselin
 - 👸🏼 Margaux Malsch
-- 👳🏼‍♂️ Nicolas Mopin
+- 👮🏻‍♂️ Nicolas Mopin
 - 👨🏼‍🔬 Axel Zidane
 - 🧟‍ Florent Quintin
 - 👨🏻‍🍳 Hugo Boudalier
