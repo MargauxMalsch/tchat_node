@@ -127,7 +127,7 @@ io.on('create_user', user => {
         if (err) { throw err; }
         console.log('votre compte à était crée avec succès');
         mongoose.connection.close();
-    });
+    }); 
 });
 });
 
