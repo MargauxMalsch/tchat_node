@@ -47,7 +47,6 @@ io.on('connection', (socket) => {
 app.use(bodyParser.urlencoded({extended: false}));
 
 
-
 app.post('/auth/register', async (req, res) => {
     try{
         let foundUser = users.find((data) => req.body.email === data.email);
@@ -116,11 +115,11 @@ io.on('create_user', user => {
 
     var user = mongoose.model('user', userSchema);
 
-    var user = new userModel({username : 'axel'});
+    var user = new userModel({username : ''});
     user.unsername = user;
-    var user = new userModel({email : 'axel@gmail.com'});
+    var user = new userModel({email : ''});
     user.email = user;
-    var user = new userModel({password : '123456'});
+    var user = new userModel({password : ''});
     user.password = user;
 
     user.save(function (err) {
