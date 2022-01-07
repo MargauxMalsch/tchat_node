@@ -21,9 +21,18 @@
       <input id="input" autocomplete="off" /><button>Send</button>
     </form>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
 
+
+      axios.get("http://localhost:3000/msg").then((result) => {
+        result.data.forEach(element => {
+          var item = document.createElement('li');
+          item.textContent = element.message;
+          messages.appendChild(item);
+        });
+      });
 
       var socket = io();
 
