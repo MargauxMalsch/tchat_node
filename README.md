@@ -27,8 +27,6 @@ Pour lancer le serveur du projet.
 npm start 
 ``` 
 
-## :scroll: Description du projet
-
 ## :family_man_woman_girl_boy: Les auteurs
 
 - 👩🏻 Mathilde Asselin
