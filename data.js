@@ -1,3 +1,3 @@
 var userDB = [];
   
-module.exports = { userDB };
+module.exports = { userDB }; 
