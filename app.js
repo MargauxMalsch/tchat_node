@@ -1,54 +1,23 @@
-const app = require('express')();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
-const port = process.env.PORT || 3000;
-const mongoose = require('mongoose');   
+const express = require('express');
+const http = require('http');
 const bcrypt = require('bcrypt');
 const path = require("path");
 const bodyParser = require('body-parser');
 const users = require('./data').userDB;
 
-
-mongoose
-  .connect("mongodb+srv://margo:Password@allo.lh527.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'))
-
-
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/registration.html');
-});
-
-app.get('/login', (req, res) => {
-  res.sendFile(__dirname + '/login.html');
-});
-
-app.get('/register', (req, res) => {
-  res.sendFile(__dirname + '/register.html');
-});
-
-
-
-
-io.on('connection', (socket) => {
-  socket.on('chat message', msg => {
-    io.emit('chat message', msg);
-  });
-});
-
-
-
-
+const app = express();
+const server = http.createServer(app);
 
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname,'./public')));
 
 
+app.get('/',(req,res) => {
+    res.sendFile(path.join(__dirname,'./public/index.html'));
+});
 
-app.post('/auth/register', async (req, res) => {
+
+app.post('/register', async (req, res) => {
     try{
         let foundUser = users.find((data) => req.body.email === data.email);
         if (!foundUser) {
@@ -56,12 +25,13 @@ app.post('/auth/register', async (req, res) => {
             let hashPassword = await bcrypt.hash(req.body.password, 10);
     
             let newUser = {
+                id: Date.now(),
                 username: req.body.username,
                 email: req.body.email,
                 password: hashPassword,
             };
             users.push(newUser);
-            console.log('Uselist', users);
+            console.log('User list', users);
     
             res.send("<div align ='center'><h2>Registration successful</h2></div><br><br><div align='center'><a href='./login.html'>login</a></div><br><br><div align='center'><a href='./registration.html'>Register another user</a></div>");
         } else {
@@ -101,38 +71,6 @@ app.post('/login', async (req, res) => {
 });
 
 
-
-var userSchema = new mongoose.Schema({
-  username: String,
-  email: String,
-  password:String
-});
-
-
-io.on('connection', (user) => {
-io.on('create_user', user => {
-  user.emit('create_user', user);
-  console.log(user)
-
-    var user = mongoose.model('user', userSchema);
-
-    var user = new userModel({username : 'axel'});
-    user.unsername = user;
-    var user = new userModel({email : 'axel@gmail.com'});
-    user.email = user;
-    var user = new userModel({password : '123456'});
-    user.password = user;
-
-    user.save(function (err) {
-        if (err) { throw err; }
-        console.log('votre compte à était crée avec succès');
-        mongoose.connection.close();
-    });
-});
-});
-
-
-
-http.listen(port, () => {
-  console.log(`Socket.IO server running at http://localhost:${port}/`);
+server.listen(3000, function(){
+    console.log("server is listening on port: 3000");
 });
